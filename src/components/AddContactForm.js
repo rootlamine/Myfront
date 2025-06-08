@@ -58,14 +58,15 @@ export default function showAddContactForm(onContactAdded) {
     e.preventDefault();
     const name = nameInput.value.trim();
     const phone = phoneInput.value.trim();
-    if (!name || !phone) {
-      errorMsg.classList.remove("hidden");
-      return;
-    }
-    errorMsg.classList.add("hidden");
+    if (!name || !phone) return;
 
-    // Ajout via l'API
-    await addContact({ name, phone });
+    // Ajout dynamique des propriétés par défaut
+    await addContact({
+      name,
+      phone,
+      archived: false,
+      blocked: false
+    });
 
     form.remove();
     if (onContactAdded) onContactAdded();

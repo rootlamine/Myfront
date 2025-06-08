@@ -1,9 +1,10 @@
 import showAddContactForm from "../components/AddContactForm.js";
 import renderContacts from "../components/ContactList.js";
-import displayMessages from "../components/MessageList.js"; 
+import displayMessages from "../components/MessageList.js";
 import createChatHeader from "../components/ChatHeader.js";
 import { addMessage } from "../services/messageService.js";
 import createMessageInput from "../components/MessageInput.js";
+import { getArchivedContacts, getBlockedContacts, updateContact, deleteContact } from "../services/contactService.js";
 // src/pages/chat.js
 export default function createChatPage() {
   const user = JSON.parse(localStorage.getItem("currentUser")) || {
@@ -28,6 +29,8 @@ export default function createChatPage() {
   const menuItems = [
     { name: "Discussions", icon: "fa-comments" },
     { name: "Contacts", icon: "fa-user-friends" },
+    { name: "Archivés", icon: "fa-archive" }, // Ajouté
+    { name: "Bloqués", icon: "fa-ban" }, // Ajout
     { name: "Groupes", icon: "fa-users" },
     { name: "Diffusions", icon: "fa-bullhorn" },
     { name: "Déconnexion", icon: "fa-sign-out-alt" },
@@ -51,19 +54,69 @@ export default function createChatPage() {
 
     if (item.name === "Contacts") {
       btn.addEventListener("click", () => {
-        showAddContactForm(() => renderContacts(conversationList, chatHeader, messagesContainer, displayMessages, setSelectedContact));
+        showAddContactForm(() =>
+          renderContacts(
+            conversationList,
+            chatHeader,
+            messagesContainer,
+            displayMessages,
+            setSelectedContact
+          )
+        );
       });
     }
     if (item.name === "Discussions") {
       btn.addEventListener("click", () => {
-        renderContacts(conversationList, chatHeader, messagesContainer, displayMessages, setSelectedContact);
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact
+        );
         if (selectedContact) {
-          chatHeader.textContent = "Discussion avec " + selectedContact.name;
+          chatHeader.setTitle("Discussion avec " + selectedContact.name);
+          chatHeader.setButtonsVisible(true);
           displayMessages(messagesContainer, selectedContact);
         } else {
-          chatHeader.textContent = "Sélectionne un contact";
+          chatHeader.setTitle("Sélectionne un contact");
+          chatHeader.setButtonsVisible(false);
           messagesContainer.innerHTML = "";
         }
+      });
+    }
+    if (item.name === "Archivés") {
+      btn.addEventListener("click", () => {
+        getArchivedContacts().then((contacts) => {
+          renderContacts(
+            conversationList,
+            chatHeader,
+            messagesContainer,
+            displayMessages,
+            setSelectedContact,
+            contacts // <-- la liste filtrée
+          );
+          chatHeader.setTitle("Contacts archivés");
+          chatHeader.setButtonsVisible(false);
+          messagesContainer.innerHTML = "";
+        });
+      });
+    }
+    if (item.name === "Bloqués") {
+      btn.addEventListener("click", () => {
+        getBlockedContacts().then((contacts) => {
+          renderContacts(
+            conversationList,
+            chatHeader,
+            messagesContainer,
+            displayMessages,
+            setSelectedContact,
+            contacts // <-- la liste filtrée
+          );
+          chatHeader.setTitle("Contacts bloqués");
+          chatHeader.setButtonsVisible(false);
+          messagesContainer.innerHTML = "";
+        });
       });
     }
 
@@ -91,17 +144,77 @@ export default function createChatPage() {
   chatZone.className = "flex flex-col flex-1 bg-gray-50";
 
   let selectedContact = null;
-  const setSelectedContact = (contact) => { selectedContact = contact; };
+  const setSelectedContact = (contact) => {
+    selectedContact = contact;
+    if (selectedContact) {
+      chatHeader.setTitle("Discussion avec " + selectedContact.name);
+      chatHeader.setButtonsVisible(true);
+    } else {
+      chatHeader.setTitle("Sélectionne un contact");
+      chatHeader.setButtonsVisible(false);
+    }
+  };
 
-  // Puis le header
-  const chatHeader = createChatHeader();
+  // Crée le header AVEC les callbacks
+  const chatHeader = createChatHeader(
+    async () => {
+      if (selectedContact && confirm("Supprimer ce contact ?")) {
+        await deleteContact(selectedContact.id);
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact
+        );
+        chatHeader.setTitle("Sélectionne un contact");
+        chatHeader.setButtonsVisible(false);
+        messagesContainer.innerHTML = "";
+        selectedContact = null;
+      }
+    },
+    async () => {
+      if (selectedContact) {
+        await updateContact(selectedContact.id, { archived: true });
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact
+        );
+        chatHeader.setTitle("Sélectionne un contact");
+        chatHeader.setButtonsVisible(false);
+      }
+    },
+    async () => {
+      if (selectedContact) {
+        await updateContact(selectedContact.id, { blocked: true });
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact
+        );
+        chatHeader.setTitle("Sélectionne un contact");
+        chatHeader.setButtonsVisible(false);
+      }
+    }
+  );
 
   // Crée d'abord messagesContainer
   const messagesContainer = document.createElement("div");
   messagesContainer.className = "flex-1 overflow-y-auto p-4 space-y-2";
 
   // Maintenant tu peux appeler renderContacts
-  renderContacts(conversationList, chatHeader, messagesContainer, displayMessages, setSelectedContact);
+  renderContacts(
+    conversationList,
+    chatHeader,
+    messagesContainer,
+    displayMessages,
+    setSelectedContact
+  );
 
   conversationSidebar.appendChild(searchBar);
   conversationSidebar.appendChild(conversationList);

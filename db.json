@@ -1,17 +1,39 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "phone": "778232295",
       "name": "Alice"
     },
     {
-      "id": 2,
+      "id": "2",
       "phone": "782305607",
       "name": "Bob"
     }
   ],
-  "contacts": [],
+  "contacts": [
+    {
+      "id": "4e6e",
+      "name": "ALiou Dialo",
+      "phone": "778988897",
+      "archived": true,
+      "blocked": false
+    },
+    {
+      "id": "3fcd",
+      "name": "cccc",
+      "phone": "778654332",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "cdeb",
+      "name": "Alpha Thiam",
+      "phone": "778654432",
+      "archived": false,
+      "blocked": false
+    }
+  ],
   "messages": [
     {
       "id": "267d",
@@ -60,6 +82,36 @@
       "contact": "Samba Fall",
       "text": "nkm",
       "time": "22:19"
+    },
+    {
+      "id": "168f",
+      "contact": "Ablaye ndiaye",
+      "text": "salut",
+      "time": "22:28"
+    },
+    {
+      "id": "173c",
+      "contact": "Ablaye ndiaye",
+      "text": "comment tu vas",
+      "time": "22:28"
+    },
+    {
+      "id": "834f",
+      "contact": "Alpha Thiam",
+      "text": "d",
+      "time": "23:16"
+    },
+    {
+      "id": "407f",
+      "contact": "Alpha Thiam",
+      "text": "comment tu vas",
+      "time": "23:41"
+    },
+    {
+      "id": "0209",
+      "contact": "ALiou Dialo",
+      "text": "ddd",
+      "time": "23:47"
     }
   ]
 }
