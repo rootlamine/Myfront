@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "phone": "778232295",
+      "name": "Alice"
+    },
+    {
+      "id": 2,
+      "phone": "782305607",
+      "name": "Bob"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "2c03",
+      "name": "Lamine",
+      "phone": "778232298"
+    }
+  ],
+  "messages": [
+    {
+      "id": "267d",
+      "contact": "Lamine",
+      "text": "salut",
+      "time": "21:12"
+    },
+    {
+      "id": "8e13",
+      "contact": "Lamine",
+      "text": "nkm",
+      "time": "21:12"
+    },
+    {
+      "id": "1a4b",
+      "contact": "Lamine",
+      "text": "nkm",
+      "time": "22:01"
+    },
+    {
+      "id": "715f",
+      "contact": "Lamine",
+      "text": "nice",
+      "time": "22:02"
+    },
+    {
+      "id": "aa96",
+      "contact": "Lamine",
+      "text": "nice",
+      "time": "22:02"
+    },
+    {
+      "id": "a786",
+      "contact": "Lamine",
+      "text": "lep cool",
+      "time": "22:04"
+    }
+  ]
+}
