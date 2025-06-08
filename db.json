@@ -11,13 +11,7 @@
       "name": "Bob"
     }
   ],
-  "contacts": [
-    {
-      "id": "2c03",
-      "name": "Lamine",
-      "phone": "778232298"
-    }
-  ],
+  "contacts": [],
   "messages": [
     {
       "id": "267d",
@@ -54,6 +48,18 @@
       "contact": "Lamine",
       "text": "lep cool",
       "time": "22:04"
+    },
+    {
+      "id": "a4f8",
+      "contact": "Samba Fall",
+      "text": "salam",
+      "time": "22:19"
+    },
+    {
+      "id": "d6d0",
+      "contact": "Samba Fall",
+      "text": "nkm",
+      "time": "22:19"
     }
   ]
 }

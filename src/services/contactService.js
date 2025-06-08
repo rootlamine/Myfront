@@ -13,3 +13,8 @@ export async function addContact(contact) {
   });
   return await res.json();
 }
+
+
+export async function deleteContact(id) {
+  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+}
