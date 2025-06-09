@@ -7,9 +7,8 @@ import createMessageInput from "../components/MessageInput.js";
 import { getArchivedContacts, getBlockedContacts, updateContact, deleteContact } from "../services/contactService.js";
 // src/pages/chat.js
 export default function createChatPage() {
-  const user = JSON.parse(localStorage.getItem("currentUser")) || {
-    name: "Utilisateur",
-  };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser?.id;
 
   const app = document.createElement("div");
   app.className = "flex h-screen w-screen";
@@ -72,12 +71,14 @@ export default function createChatPage() {
           chatHeader,
           messagesContainer,
           displayMessages,
-          setSelectedContact
+          setSelectedContact,
+          undefined, // ou la liste filtrée si besoin
+          userId     // <-- Passe le userId ici
         );
         if (selectedContact) {
           chatHeader.setTitle("Discussion avec " + selectedContact.name);
           chatHeader.setButtonsVisible(true);
-          displayMessages(messagesContainer, selectedContact);
+          displayMessages(messagesContainer, selectedContact, userId);
         } else {
           chatHeader.setTitle("Sélectionne un contact");
           chatHeader.setButtonsVisible(false);
@@ -147,11 +148,15 @@ export default function createChatPage() {
   const setSelectedContact = (contact) => {
     selectedContact = contact;
     if (selectedContact) {
+      localStorage.setItem("selectedContactId", selectedContact.id); // <-- Ajoute cette ligne
       chatHeader.setTitle("Discussion avec " + selectedContact.name);
       chatHeader.setButtonsVisible(true);
+      displayMessages(messagesContainer, selectedContact, userId);
     } else {
+      localStorage.removeItem("selectedContactId"); // <-- Ajoute cette ligne
       chatHeader.setTitle("Sélectionne un contact");
       chatHeader.setButtonsVisible(false);
+      messagesContainer.innerHTML = "";
     }
   };
 
@@ -213,8 +218,14 @@ export default function createChatPage() {
     chatHeader,
     messagesContainer,
     displayMessages,
-    setSelectedContact
+    setSelectedContact,
+    undefined, // ou la liste filtrée si besoin
+    userId     // <-- Passe le userId ici
   );
+
+  // Après avoir chargé les contacts (après renderContacts)
+  const selectedContactId = localStorage.getItem("selectedContactId");
+  if (selectedContactId) {}
 
   conversationSidebar.appendChild(searchBar);
   conversationSidebar.appendChild(conversationList);
@@ -250,8 +261,14 @@ export default function createChatPage() {
       return;
     }
     if (text) {
-      await addMessage(selectedContact.name, text);
-      displayMessages(selectedContact);
+      await addMessage({
+        userId,
+        contactId: selectedContact.id,
+        text,
+        timestamp: Date.now(),
+        read: false
+      });
+      displayMessages(messagesContainer, selectedContact, userId);
       input.value = "";
     }
   });
@@ -261,8 +278,14 @@ export default function createChatPage() {
       alert("Sélectionne un contact d'abord !");
       return;
     }
-    await addMessage(selectedContact.name, text);
-    displayMessages(messagesContainer, selectedContact);
+    await addMessage({
+      userId,
+      contactId: selectedContact.id,
+      text,
+      timestamp: Date.now(),
+      read: false
+    });
+    displayMessages(messagesContainer, selectedContact, userId);
   });
 
   chatZone.appendChild(chatHeader);

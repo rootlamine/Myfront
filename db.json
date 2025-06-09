@@ -24,6 +24,7 @@
   "contacts": [
     {
       "id": "4e6e",
+      "userId": "1",
       "name": "ALiou Dialo",
       "phone": "778988897",
       "archived": false,
@@ -42,104 +43,104 @@
       "phone": "778654432",
       "archived": false,
       "blocked": false
+    },
+    {
+      "id": "38af",
+      "userId": "e71e",
+      "name": "Fama",
+      "phone": "778343322",
+      "archived": true,
+      "blocked": false
+    },
+    {
+      "id": "5f98",
+      "userId": "1",
+      "name": "Ass",
+      "phone": "778232287",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "46a0",
+      "userId": "1",
+      "name": "dccdccscds",
+      "phone": "778566654",
+      "archived": false,
+      "blocked": false
     }
   ],
   "messages": [
     {
-      "id": "267d",
-      "contact": "Lamine",
+      "id": "3be5",
+      "userId": "e71e",
+      "contactId": "3fcd",
       "text": "salut",
-      "time": "21:12"
+      "timestamp": 1749434617933,
+      "read": false
     },
     {
-      "id": "8e13",
-      "contact": "Lamine",
+      "id": "0930",
+      "userId": "e71e",
+      "contactId": "3fcd",
       "text": "nkm",
-      "time": "21:12"
+      "timestamp": 1749434708913,
+      "read": false
     },
     {
-      "id": "1a4b",
-      "contact": "Lamine",
-      "text": "nkm",
-      "time": "22:01"
+      "id": "dd6d",
+      "userId": "e71e",
+      "contactId": "3fcd",
+      "text": "xx",
+      "timestamp": 1749434717689,
+      "read": false
     },
     {
-      "id": "715f",
-      "contact": "Lamine",
-      "text": "nice",
-      "time": "22:02"
+      "id": "3e4f",
+      "userId": "e71e",
+      "contactId": "cdeb",
+      "text": "ss",
+      "timestamp": 1749434984356,
+      "read": false
     },
     {
-      "id": "aa96",
-      "contact": "Lamine",
-      "text": "nice",
-      "time": "22:02"
+      "id": "2257",
+      "userId": "1",
+      "contactId": "4e6e",
+      "text": "bb",
+      "timestamp": 1749435378535,
+      "read": false
     },
     {
-      "id": "a786",
-      "contact": "Lamine",
-      "text": "lep cool",
-      "time": "22:04"
+      "id": "e475",
+      "userId": "1",
+      "contactId": "cdeb",
+      "text": "nkjkkjsdd",
+      "timestamp": 1749436219582,
+      "read": false
     },
     {
-      "id": "a4f8",
-      "contact": "Samba Fall",
-      "text": "salam",
-      "time": "22:19"
+      "id": "efce",
+      "userId": "1",
+      "contactId": "4e6e",
+      "text": "njjkjkjs",
+      "timestamp": 1749436232146,
+      "read": false
     },
     {
-      "id": "d6d0",
-      "contact": "Samba Fall",
-      "text": "nkm",
-      "time": "22:19"
+      "id": "11d4",
+      "userId": "1",
+      "contactId": "3fcd",
+      "text": "bnbnbcc",
+      "timestamp": 1749436245039,
+      "read": false
     },
     {
-      "id": "168f",
-      "contact": "Ablaye ndiaye",
-      "text": "salut",
-      "time": "22:28"
-    },
-    {
-      "id": "173c",
-      "contact": "Ablaye ndiaye",
-      "text": "comment tu vas",
-      "time": "22:28"
-    },
-    {
-      "id": "834f",
-      "contact": "Alpha Thiam",
-      "text": "d",
-      "time": "23:16"
-    },
-    {
-      "id": "407f",
-      "contact": "Alpha Thiam",
-      "text": "comment tu vas",
-      "time": "23:41"
-    },
-    {
-      "id": "0209",
-      "contact": "ALiou Dialo",
-      "text": "ddd",
-      "time": "23:47"
-    },
-    {
-      "id": "4839",
-      "contact": "ALiou Dialo",
-      "text": "salut",
-      "time": "00:08"
-    },
-    {
-      "id": "0eb7",
-      "contact": "ALiou Dialo",
-      "text": "nkmm",
-      "time": "00:09"
-    },
-    {
-      "id": "b7bb",
-      "contact": "cccc",
-      "text": "ssss",
-      "time": "00:10"
+      "id": "cc56",
+      "userId": "e71e",
+      "contactId": "cdeb",
+      "text": "test",
+      "timestamp": 1749436329073,
+      "read": false
     }
   ]
 }

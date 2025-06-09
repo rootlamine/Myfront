@@ -1,19 +1,18 @@
 const API_URL = "http://localhost:3000/messages";
 
-export async function getMessagesForContact(contactName) {
-  const res = await fetch(`${API_URL}?contact=${encodeURIComponent(contactName)}`);
+export async function getMessagesForContact(userId, contactId) {
+  const res = await fetch(`${API_URL}?userId=${userId}&contactId=${contactId}`);
   return await res.json();
 }
 
-export async function addMessage(contactName, text) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contact: contactName,
-      text,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    }),
+export async function addMessage(message) {
+  const response = await fetch('http://localhost:3000/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(message)
   });
-  return await res.json();
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
 }

@@ -7,12 +7,13 @@ export default function renderContacts(
   messagesContainer,
   displayMessages,
   setSelectedContact,
-  contactsOverride
+  contactsOverride,
+  userId
 ) {
   conversationList.innerHTML = "";
   const contactsPromise = contactsOverride
     ? Promise.resolve(contactsOverride)
-    : getContacts();
+    : getContacts(userId);
 
   contactsPromise.then((contacts) => {
     contacts.forEach((contact) => {
@@ -22,7 +23,7 @@ export default function renderContacts(
 
       // Partie gauche : nom + dernier message
       const infoDiv = document.createElement("div");
-      infoDiv.className = "flex flex-col min-w-0"; // min-w-0 pour le text-overflow
+      infoDiv.className = "flex flex-col min-w-0";
 
       const nameSpan = document.createElement("span");
       nameSpan.textContent = contact.name;
@@ -38,12 +39,14 @@ export default function renderContacts(
       const lastMsgTime = document.createElement("span");
       lastMsgTime.className = "text-xs text-gray-400 ml-2 flex-shrink-0";
 
-      // Récupère et affiche le dernier message (asynchrone)
-      getMessagesForContact(contact.name).then((messages) => {
+      // Correction ici : on utilise contact.id et on affiche l'heure formatée
+      getMessagesForContact(userId, contact.id).then((messages) => {
         if (messages.length > 0) {
           const lastMsg = messages[messages.length - 1];
           lastMsgDiv.textContent = lastMsg.text;
-          lastMsgTime.textContent = lastMsg.time;
+          lastMsgTime.textContent = lastMsg.timestamp
+            ? new Date(lastMsg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : "";
         } else {
           lastMsgDiv.textContent = "Aucun message";
           lastMsgTime.textContent = "";
@@ -105,7 +108,7 @@ export default function renderContacts(
       chatItem.onclick = () => {
         setSelectedContact(contact);
         chatHeader.setTitle("Discussion avec " + contact.name);
-        displayMessages(messagesContainer, contact);
+        displayMessages(messagesContainer, contact, userId);
       };
 
       chatItem.appendChild(infoDiv);

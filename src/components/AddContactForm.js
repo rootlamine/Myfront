@@ -56,18 +56,14 @@ export default function showAddContactForm(onContactAdded) {
 
   form.onsubmit = async (e) => {
     e.preventDefault();
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    if (!name || !phone) return;
-
-    // Ajout dynamique des propriétés par défaut
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     await addContact({
-      name,
-      phone,
+      userId: currentUser.id,
+      name: nameInput.value,
+      phone: phoneInput.value,
       archived: false,
       blocked: false
     });
-
     form.remove();
     if (onContactAdded) onContactAdded();
   };

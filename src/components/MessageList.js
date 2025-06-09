@@ -1,9 +1,9 @@
 import { getMessagesForContact } from "../services/messageService.js";
 
-export default function displayMessages(messagesContainer, contact) {
+export default function displayMessages(messagesContainer, contact, userId) {
   messagesContainer.innerHTML = "";
-  if (!contact) return;
-  getMessagesForContact(contact.name).then((msgs) => {
+  if (!contact || !userId) return;
+  getMessagesForContact(userId, contact.id).then((msgs) => {
     msgs.forEach((msg) => {
       const msgDiv = document.createElement("div");
       msgDiv.className = "flex flex-col items-end mb-2";
@@ -13,7 +13,7 @@ export default function displayMessages(messagesContainer, contact) {
       bubble.textContent = msg.text;
       const time = document.createElement("span");
       time.className = "text-xs text-gray-400 mt-1";
-      time.textContent = msg.time;
+      time.textContent = msg.time || new Date(msg.timestamp).toLocaleTimeString();
       msgDiv.appendChild(bubble);
       msgDiv.appendChild(time);
       messagesContainer.appendChild(msgDiv);
