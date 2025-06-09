@@ -1,4 +1,5 @@
-import loginForm from './pages/login.js';
+///import loginForm from './pages/login.js';
+import createLoginPage from './pages/login.js';
 import createChatPage from './pages/chat.js';
 import './index.css';
 
@@ -12,7 +13,7 @@ function renderApp() {
   if (user) {
     document.body.appendChild(createChatPage());
   } else {
-    document.body.appendChild(loginForm);
+    document.body.appendChild(createLoginPage());
   }
 }
 

@@ -1,85 +1,163 @@
-import { getUserByPhone } from '../services/api.js';
+import { getUserByPhone, addUser } from '../services/userService.js';
 
-// Conteneur principal pour centrer le formulaire
-const container = document.createElement('div');
-// container.className = 'flex items-center justify-center min-h-screen bg-blue-600';
-container.className = 'flex items-center justify-center min-h-screen w-screen bg-oklch(0.917 0.08 205.041)';
+export default function createLoginPage(onLogin) {
+  const container = document.createElement('div');
+  container.className = 'flex items-center justify-center min-h-screen w-screen bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300';
 
+  // Card
+  const card = document.createElement('div');
+  card.className = 'bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md';
 
-const form = document.createElement('form');
-form.className = 'w-full max-w-2xl p-16 bg-white rounded-2xl shadow-2xl animate-fade-in'; // largeur et padding augmentés
+  // Logo ou titre
+  const logo = document.createElement('div');
+  logo.className = 'mb-6 text-4xl font-extrabold text-blue-700 tracking-tight';
+  logo.textContent = 'Bienvenu sur PencMi';
+  card.appendChild(logo);
 
-// Titre
-const h1 = document.createElement('h1');
-h1.className = 'text-4xl font-bold text-center mb-8 text-blue-700';
-h1.textContent = 'Connexion';
-form.appendChild(h1);
+  // Choix Connexion / Inscription
+  const btnGroup = document.createElement('div');
+  btnGroup.className = 'flex gap-4 mb-8 w-full justify-center';
 
-// Bloc input
-const divInput = document.createElement('div');
-divInput.className = 'mb-6';
+  const btnConnexion = document.createElement('button');
+  btnConnexion.textContent = "Connexion";
+  btnConnexion.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
+  btnGroup.appendChild(btnConnexion);
 
-const label = document.createElement('label');
-label.className = 'block text-gray-700 mb-2';
-label.setAttribute('for', 'phone');
-label.textContent = 'Numéro de téléphone';
+  const btnInscription = document.createElement('button');
+  btnInscription.textContent = "Inscription";
+  btnInscription.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
+  btnGroup.appendChild(btnInscription);
 
-const input = document.createElement('input');
-input.id = 'phone';
-input.name = 'phone';
-input.type = 'tel';
-input.placeholder = 'Entrez votre numéro de téléphone'; 
-input.required = true;
-input.className = 'w-full px-6 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg';
+  card.appendChild(btnGroup);
 
-divInput.appendChild(label);
-divInput.appendChild(input);
-form.appendChild(divInput);
+  // Formulaires
+  const formConnexion = document.createElement('form');
+  formConnexion.className = 'w-full flex flex-col gap-5';
 
-// Bouton
-const button = document.createElement('button');
-button.type = 'submit';
-button.className = 'w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-semibold';
-button.textContent = 'Se connecter';
-form.appendChild(button);
+  const phoneInputConnexion = document.createElement('input');
+  phoneInputConnexion.type = 'text';
+  phoneInputConnexion.placeholder = 'Numéro de téléphone';
+  phoneInputConnexion.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  formConnexion.appendChild(phoneInputConnexion);
 
-// Message d'erreur
-const errorMsg = document.createElement('p');
-errorMsg.id = 'errorMsg';
-errorMsg.className = 'text-red-600 mt-4 text-center hidden';
-form.appendChild(errorMsg);
+  const errorPhoneConnexion = document.createElement('div');
+  errorPhoneConnexion.className = 'text-red-500 text-xs min-h-[18px]';
+  formConnexion.appendChild(errorPhoneConnexion);
 
-// Ajoute une animation simple
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate-fade-in {
-    animation: fade-in 0.5s ease-out;
-  }
-`;
-document.head.appendChild(style);
+  const submitConnexion = document.createElement('button');
+  submitConnexion.type = 'submit';
+  submitConnexion.textContent = "Se connecter";
+  submitConnexion.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 font-semibold transition';
+  formConnexion.appendChild(submitConnexion);
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const phone = input.value.trim();
-  errorMsg.textContent = '';
-  errorMsg.classList.add('hidden');
+  // Formulaire inscription
+  const formInscription = document.createElement('form');
+  formInscription.className = 'w-full flex flex-col gap-5 hidden';
 
-  const user = await getUserByPhone(phone);
-  if (user) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    // Dispatch l'événement pour signaler la connexion réussie
-    const event = new Event('loginSuccess');
-    window.dispatchEvent(event);
-  } else {
-    errorMsg.textContent = 'Utilisateur non trouvé.';
-    errorMsg.classList.remove('hidden');
-  }
-});
+  const nameInput = document.createElement('input');
+  nameInput.type = 'text';
+  nameInput.placeholder = 'Nom';
+  nameInput.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  formInscription.appendChild(nameInput);
 
-container.appendChild(form);
+  const errorName = document.createElement('div');
+  errorName.className = 'text-red-500 text-xs min-h-[18px]';
+  formInscription.appendChild(errorName);
 
-export default container;
+  const phoneInputInscription = document.createElement('input');
+  phoneInputInscription.type = 'text';
+  phoneInputInscription.placeholder = 'Numéro de téléphone';
+  phoneInputInscription.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  formInscription.appendChild(phoneInputInscription);
+
+  const errorPhoneInscription = document.createElement('div');
+  errorPhoneInscription.className = 'text-red-500 text-xs min-h-[18px]';
+  formInscription.appendChild(errorPhoneInscription);
+
+  const submitInscription = document.createElement('button');
+  submitInscription.type = 'submit';
+  submitInscription.textContent = "S'inscrire";
+  submitInscription.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 font-semibold transition';
+  formInscription.appendChild(submitInscription);
+
+  // Gestion affichage
+  btnConnexion.onclick = (e) => {
+    e.preventDefault();
+    formConnexion.classList.remove('hidden');
+    formInscription.classList.add('hidden');
+    btnConnexion.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
+    btnInscription.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
+    // Reset errors
+    errorPhoneConnexion.textContent = '';
+    errorName.textContent = '';
+    errorPhoneInscription.textContent = '';
+  };
+  btnInscription.onclick = (e) => {
+    e.preventDefault();
+    formConnexion.classList.add('hidden');
+    formInscription.classList.remove('hidden');
+    btnConnexion.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
+    btnInscription.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
+    // Reset errors
+    errorPhoneConnexion.textContent = '';
+    errorName.textContent = '';
+    errorPhoneInscription.textContent = '';
+  };
+
+  // Soumission connexion
+  formConnexion.onsubmit = async (e) => {
+    e.preventDefault();
+    errorPhoneConnexion.textContent = '';
+    const phone = phoneInputConnexion.value.trim();
+    if (!phone) {
+      errorPhoneConnexion.textContent = "Le numéro est requis.";
+      return;
+    }
+    const user = await getUserByPhone(phone);
+    if (user) {
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      if (onLogin) onLogin(user);
+      window.dispatchEvent(new Event('loginSuccess'));
+    } else {
+      errorPhoneConnexion.textContent = "Numéro inconnu. Veuillez vous inscrire.";
+    }
+  };
+
+  // Soumission inscription
+  formInscription.onsubmit = async (e) => {
+    e.preventDefault();
+    errorName.textContent = '';
+    errorPhoneInscription.textContent = '';
+    const name = nameInput.value.trim();
+    const phone = phoneInputInscription.value.trim();
+    let hasError = false;
+    if (!name) {
+      errorName.textContent = "Le nom est requis.";
+      hasError = true;
+    }
+    if (!phone) {
+      errorPhoneInscription.textContent = "Le numéro est requis.";
+      hasError = true;
+    }
+    if (hasError) return;
+    let user = await getUserByPhone(phone);
+    if (user) {
+      errorPhoneInscription.textContent = "Ce numéro existe déjà. Veuillez vous connecter.";
+      return;
+    }
+    user = await addUser({ name, phone });
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    if (onLogin) onLogin(user);
+    window.dispatchEvent(new Event('loginSuccess'));
+  };
+
+  card.appendChild(formConnexion);
+  card.appendChild(formInscription);
+
+  // Afficher connexion par défaut
+  formConnexion.classList.remove('hidden');
+  formInscription.classList.add('hidden');
+
+  container.appendChild(card);
+  return container;
+}
