@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/messages";
+const API_URL = "https://backpencmi.onrender.com"; 
 
 export async function getMessagesForContact(userId, contactId) {
   const res = await fetch(`${API_URL}?userId=${userId}&contactId=${contactId}`);
@@ -6,7 +6,7 @@ export async function getMessagesForContact(userId, contactId) {
 }
 
 export async function addMessage(message) {
-  const response = await fetch('http://localhost:3000/messages', {
+  const response = await fetch('https://backpencmi.onrender.com', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(message)

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/contacts";
+const API_URL = "https://backpencmi.onrender.com"; // Change this to your actual API URL
 
 export async function getContacts(userId) {
   const res = await fetch(`${API_URL}?userId=${userId}&archived=false&blocked=false`);
