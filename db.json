@@ -13,21 +13,53 @@
   ],
   "contacts": [
     {
-      "id": "98d6",
+      "id": "654c",
       "userId": "3ebd",
-      "name": "Amadou Fall",
-      "phone": "778239087",
-      "archived": true,
+      "name": "ejgjhklkjg",
+      "phone": "778654321",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "c3ba",
+      "userId": "3ebd",
+      "name": "test",
+      "phone": "778909878",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "1ca5",
+      "userId": "3ebd",
+      "name": "test",
+      "phone": "778232298",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "4aac",
+      "userId": "3ebd",
+      "name": "Khadim",
+      "phone": "778908887",
+      "archived": false,
       "blocked": false
     }
   ],
   "messages": [
     {
-      "id": "a6c3",
+      "id": "f4a2",
       "userId": "3ebd",
-      "contactId": "98d6",
-      "text": "salut",
-      "timestamp": 1749573835980,
+      "contactId": "1ca5",
+      "text": "test",
+      "timestamp": 1749578999820,
+      "read": false
+    },
+    {
+      "id": "766d",
+      "userId": "3ebd",
+      "contactId": "1ca5",
+      "text": "comment tu vas",
+      "timestamp": 1749580722458,
       "read": false
     }
   ]

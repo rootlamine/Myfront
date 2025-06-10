@@ -88,7 +88,7 @@ export default function createChatPage() {
     }
     if (item.name === "Archivés") {
       btn.addEventListener("click", () => {
-        getArchivedContacts().then((contacts) => {
+        getArchivedContacts(userId).then((contacts) => {
           renderContacts(
             conversationList,
             chatHeader,
