@@ -1,4 +1,5 @@
-const API_URL = "https://backpencmi.onrender.com";
+// filepath: /home/lex_code/Documents/JavaScript/PencMi/src/services/userService.js
+const API_URL = "http://localhost:3000";
 
 export async function getUserByPhone(phone) {
   const res = await fetch(`${API_URL}/users?phone=${encodeURIComponent(phone)}`);

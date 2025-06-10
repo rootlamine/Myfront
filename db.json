@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "3ebd",
+      "phone": "778232295",
+      "name": "Samba"
+    },
+    {
+      "id": "e71e",
+      "name": "Aliou Fall",
+      "phone": "777777777"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "98d6",
+      "userId": "3ebd",
+      "name": "Amadou Fall",
+      "phone": "778239087",
+      "archived": true,
+      "blocked": false
+    }
+  ],
+  "messages": [
+    {
+      "id": "a6c3",
+      "userId": "3ebd",
+      "contactId": "98d6",
+      "text": "salut",
+      "timestamp": 1749573835980,
+      "read": false
+    }
+  ]
+}
