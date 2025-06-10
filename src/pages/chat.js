@@ -105,7 +105,7 @@ export default function createChatPage() {
     }
     if (item.name === "Bloqués") {
       btn.addEventListener("click", () => {
-        getBlockedContacts().then((contacts) => {
+        getBlockedContacts(userId).then((contacts) => {
           renderContacts(
             conversationList,
             chatHeader,

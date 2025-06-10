@@ -9,6 +9,11 @@
       "id": "e71e",
       "name": "Aliou Fall",
       "phone": "777777777"
+    },
+    {
+      "id": "c631",
+      "name": "Al amine",
+      "phone": "782305607"
     }
   ],
   "contacts": [
@@ -43,6 +48,30 @@
       "phone": "778908887",
       "archived": false,
       "blocked": false
+    },
+    {
+      "id": "69a0",
+      "userId": "e71e",
+      "name": "Boubacar",
+      "phone": "778972321",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "5b00",
+      "userId": "e71e",
+      "name": "Samba Diallo",
+      "phone": "778845443",
+      "archived": false,
+      "blocked": false
+    },
+    {
+      "id": "0685",
+      "userId": "c631",
+      "name": "jdfjksd",
+      "phone": "785432134",
+      "archived": false,
+      "blocked": false
     }
   ],
   "messages": [
@@ -60,6 +89,38 @@
       "contactId": "1ca5",
       "text": "comment tu vas",
       "timestamp": 1749580722458,
+      "read": false
+    },
+    {
+      "id": "d0d3",
+      "userId": "e71e",
+      "contactId": "69a0",
+      "text": "je vais bien",
+      "timestamp": 1749581322932,
+      "read": false
+    },
+    {
+      "id": "2495",
+      "userId": "e71e",
+      "contactId": "5b00",
+      "text": "salut",
+      "timestamp": 1749582057130,
+      "read": false
+    },
+    {
+      "id": "bf69",
+      "userId": "c631",
+      "contactId": "0685",
+      "text": "daaa",
+      "timestamp": 1749582989542,
+      "read": false
+    },
+    {
+      "id": "040d",
+      "userId": "c631",
+      "contactId": "0685",
+      "text": "ghj",
+      "timestamp": 1749583230718,
       "read": false
     }
   ]
