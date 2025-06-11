@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/messages"; 
+const API_URL = "https://backend-6s9s.onrender.com/messages"; 
 
 export async function getMessagesForContact(userId, contactId) {
   const res = await fetch(`${API_URL}?userId=${userId}&contactId=${contactId}`);
@@ -7,7 +7,7 @@ export async function getMessagesForContact(userId, contactId) {
 }
 
 export async function addMessage(message) {
-  const response = await fetch('http://localhost:3000/messages', {
+  const response = await fetch('https://backend-6s9s.onrender.com/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(message)

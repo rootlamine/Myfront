@@ -3,9 +3,9 @@ import renderContacts from "../components/ContactList.js";
 import displayMessages from "../components/MessageList.js";
 import createChatHeader from "../components/ChatHeader.js";
 import { addMessage } from "../services/messageService.js";
-import createMessageInput from "../components/MessageInput.js";
 import { getArchivedContacts, getBlockedContacts, updateContact, deleteContact } from "../services/contactService.js";
-// src/pages/chat.js
+import createMenuSidebar from "../components/MenuSidebar.js";
+
 export default function createChatPage() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userId = currentUser?.id;
@@ -19,110 +19,6 @@ export default function createChatPage() {
   faLink.href =
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
   document.head.appendChild(faLink);
-
-  // === Primary Sidebar (Icons Menu) ===
-  const menuSidebar = document.createElement("div");
-  menuSidebar.className =
-    "w-16 bg-gray-900 text-white flex flex-col items-center py-4 justify-center space-y-6";
-
-  const menuItems = [
-    { name: "Discussions", icon: "fa-comments" },
-    { name: "Contacts", icon: "fa-user-friends" },
-    { name: "Archivés", icon: "fa-archive" }, // Ajouté
-    { name: "Bloqués", icon: "fa-ban" }, // Ajout
-    { name: "Groupes", icon: "fa-users" },
-    { name: "Diffusions", icon: "fa-bullhorn" },
-    { name: "Déconnexion", icon: "fa-sign-out-alt" },
-  ];
-
-  menuItems.forEach((item) => {
-    const btn = document.createElement("button");
-    btn.className =
-      "text-xl hover:text-blue-400 focus:outline-none flex items-center justify-center w-10 h-10";
-    btn.title = item.name;
-    const icon = document.createElement("i");
-    icon.className = `fas ${item.icon}`;
-    btn.appendChild(icon);
-
-    if (item.name === "Déconnexion") {
-      btn.addEventListener("click", () => {
-        localStorage.removeItem("currentUser");
-        window.location.href = "/";
-      });
-    }
-
-    if (item.name === "Contacts") {
-      btn.addEventListener("click", () => {
-        showAddContactForm(() =>
-          renderContacts(
-            conversationList,
-            chatHeader,
-            messagesContainer,
-            displayMessages,
-            setSelectedContact
-          )
-        );
-      });
-    }
-    if (item.name === "Discussions") {
-      btn.addEventListener("click", () => {
-        renderContacts(
-          conversationList,
-          chatHeader,
-          messagesContainer,
-          displayMessages,
-          setSelectedContact,
-          undefined, // ou la liste filtrée si besoin
-          userId     // <-- Passe le userId ici
-        );
-        if (selectedContact) {
-          chatHeader.setTitle("Discussion avec " + selectedContact.name);
-          chatHeader.setButtonsVisible(true);
-          displayMessages(messagesContainer, selectedContact, userId);
-        } else {
-          chatHeader.setTitle("Sélectionne un contact");
-          chatHeader.setButtonsVisible(false);
-          messagesContainer.innerHTML = "";
-        }
-      });
-    }
-    if (item.name === "Archivés") {
-      btn.addEventListener("click", () => {
-        getArchivedContacts(userId).then((contacts) => {
-          renderContacts(
-            conversationList,
-            chatHeader,
-            messagesContainer,
-            displayMessages,
-            setSelectedContact,
-            contacts // <-- la liste filtrée
-          );
-          chatHeader.setTitle("Contacts archivés");
-          chatHeader.setButtonsVisible(false);
-          messagesContainer.innerHTML = "";
-        });
-      });
-    }
-    if (item.name === "Bloqués") {
-      btn.addEventListener("click", () => {
-        getBlockedContacts(userId).then((contacts) => {
-          renderContacts(
-            conversationList,
-            chatHeader,
-            messagesContainer,
-            displayMessages,
-            setSelectedContact,
-            contacts // <-- la liste filtrée
-          );
-          chatHeader.setTitle("Contacts bloqués");
-          chatHeader.setButtonsVisible(false);
-          messagesContainer.innerHTML = "";
-        });
-      });
-    }
-
-    menuSidebar.appendChild(btn);
-  });
 
   // === Secondary Sidebar (Liste de discussions) ===
   const conversationSidebar = document.createElement("div");
@@ -140,27 +36,27 @@ export default function createChatPage() {
   const conversationList = document.createElement("div");
   conversationList.className = "flex-1 overflow-y-auto";
 
-  // Chat zone
-  const chatZone = document.createElement("div");
-  chatZone.className = "flex flex-col flex-1 bg-gray-50";
+  // 1. Crée d'abord messagesContainer
+  const messagesContainer = document.createElement("div");
+  messagesContainer.className = "flex-1 overflow-y-auto p-4 space-y-2";
 
+  // 2. Crée le header AVANT le menuSidebar
   let selectedContact = null;
   const setSelectedContact = (contact) => {
     selectedContact = contact;
     if (selectedContact) {
-      localStorage.setItem("selectedContactId", selectedContact.id); // <-- Ajoute cette ligne
+      localStorage.setItem("selectedContactId", selectedContact.id);
       chatHeader.setTitle("Discussion avec " + selectedContact.name);
       chatHeader.setButtonsVisible(true);
       displayMessages(messagesContainer, selectedContact, userId);
     } else {
-      localStorage.removeItem("selectedContactId"); // <-- Ajoute cette ligne
+      localStorage.removeItem("selectedContactId");
       chatHeader.setTitle("Sélectionne un contact");
       chatHeader.setButtonsVisible(false);
       messagesContainer.innerHTML = "";
     }
   };
 
-  // Crée le header AVEC les callbacks
   const chatHeader = createChatHeader(
     async () => {
       if (selectedContact && confirm("Supprimer ce contact ?")) {
@@ -208,29 +104,99 @@ export default function createChatPage() {
     }
   );
 
-  // Crée d'abord messagesContainer
-  const messagesContainer = document.createElement("div");
-  messagesContainer.className = "flex-1 overflow-y-auto p-4 space-y-2";
+  // 3. Crée le menuSidebar ensuite
+  const menuSidebar = createMenuSidebar({
+    onDiscussions: () => {
+      renderContacts(
+        conversationList,
+        chatHeader,
+        messagesContainer,
+        displayMessages,
+        setSelectedContact,
+        undefined,
+        userId
+      );
+      if (selectedContact) {
+        chatHeader.setTitle("Discussion avec " + selectedContact.name);
+        chatHeader.setButtonsVisible(true);
+        displayMessages(messagesContainer, selectedContact, userId);
+      } else {
+        chatHeader.setTitle("Sélectionne un contact");
+        chatHeader.setButtonsVisible(false);
+        messagesContainer.innerHTML = "";
+      }
+    },
+    onContacts: () => {
+      showAddContactForm(() =>
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact
+        )
+      );
+    },
+    onArchives: () => {
+      getArchivedContacts(userId).then((contacts) => {
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact,
+          contacts
+        );
+        chatHeader.setTitle("Contacts archivés");
+        chatHeader.setButtonsVisible(false);
+        messagesContainer.innerHTML = "";
+      });
+    },
+    onBlocked: () => {
+      getBlockedContacts(userId).then((contacts) => {
+        renderContacts(
+          conversationList,
+          chatHeader,
+          messagesContainer,
+          displayMessages,
+          setSelectedContact,
+          contacts
+        );
+        chatHeader.setTitle("Contacts bloqués");
+        chatHeader.setButtonsVisible(false);
+        messagesContainer.innerHTML = "";
+      });
+    },
+    conversationList,
+    chatHeader,
+    messagesContainer,
+    displayMessages,
+    setSelectedContact,
+    userId,
+    selectedContact
+  });
 
-  // Maintenant tu peux appeler renderContacts
+  // Affiche la liste des contacts au démarrage
   renderContacts(
     conversationList,
     chatHeader,
     messagesContainer,
     displayMessages,
     setSelectedContact,
-    undefined, // ou la liste filtrée si besoin
-    userId     // <-- Passe le userId ici
+    undefined,
+    userId
   );
 
   // Après avoir chargé les contacts (après renderContacts)
   const selectedContactId = localStorage.getItem("selectedContactId");
-  if (selectedContactId) {}
+  if (selectedContactId) {
+    // Optionnel : tu peux sélectionner le contact ici si tu veux
+  }
 
   conversationSidebar.appendChild(searchBar);
   conversationSidebar.appendChild(conversationList);
 
-  // Formulaire de message sans innerHTML
+  // Formulaire de message natif
   const form = document.createElement("form");
   form.className = "flex items-center p-4 bg-white border-t w-full px-30";
 
@@ -268,29 +234,19 @@ export default function createChatPage() {
         timestamp: Date.now(),
         read: false
       });
-      displayMessages(messagesContainer, selectedContact, userId);
+      displayMessages(messagesContainer, selectedContact, userId); // Rafraîchit l'affichage
       input.value = "";
     }
   });
 
-  const messageInput = createMessageInput(async (text) => {
-    if (!selectedContact) {
-      alert("Sélectionne un contact d'abord !");
-      return;
-    }
-    await addMessage({
-      userId,
-      contactId: selectedContact.id,
-      text,
-      timestamp: Date.now(),
-      read: false
-    });
-    displayMessages(messagesContainer, selectedContact, userId);
-  });
+  // === Zone principale de chat ===
+  const chatZone = document.createElement("div");
+  chatZone.className = "flex-1 flex flex-col bg-gray-100";
 
+  // Ajoute les éléments à chatZone
   chatZone.appendChild(chatHeader);
   chatZone.appendChild(messagesContainer);
-  chatZone.appendChild(messageInput);
+  chatZone.appendChild(form); // Ajoute le formulaire natif
 
   // Assemblage final
   app.appendChild(menuSidebar);

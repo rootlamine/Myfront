@@ -1,20 +1,13 @@
 import { getMessagesForContact } from "../services/messageService.js";
 
-const displayedContacts = [];
-
 export default function displayMessages(messagesContainer, contact, userId) {
- if (!contact || !userId) return;
-
- 
-  if (displayedContacts.includes(contact.id)) return;
-  displayedContacts.push(contact.id);
+  if (!contact || !userId) return;
 
   messagesContainer.innerHTML = "";
-  if (!contact || !userId) return;
   getMessagesForContact(userId, contact.id).then((msgs) => {
     msgs.forEach((msg) => {
       const msgDiv = document.createElement("div");
-      msgDiv.className =   "flex flex-col items-end mb-2";
+      msgDiv.className = "flex flex-col items-end mb-2";
       const bubble = document.createElement("div");
       bubble.className =
         "self-end bg-blue-500 text-white px-4 py-2 rounded-xl max-w-xs ml-auto";
