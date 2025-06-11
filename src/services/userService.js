@@ -1,5 +1,5 @@
 // filepath: /home/lex_code/Documents/JavaScript/PencMi/src/services/userService.js
-const API_URL = "https://backend-6s9s.onrender.com/users"; // Change this to your actual API URL
+const API_URL = "https://backend-6s9s.onrender.com"; // Change this to your actual API URL
 
 export async function getUserByPhone(phone) {
   const res = await fetch(`${API_URL}/users?phone=${encodeURIComponent(phone)}`);
