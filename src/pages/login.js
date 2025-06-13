@@ -2,7 +2,7 @@ import { getUserByPhone, addUser } from '../services/userService.js';
 
 export default function createLoginPage(onLogin) {
   const container = document.createElement('div');
-  container.className = 'flex items-center justify-center min-h-screen w-screen bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300';
+  container.className = 'flex items-center justify-center min-h-screen w-screen bg-gradient-to-br from-[#DCF8C6] via-[#ECE5DD] to-[#128C7E]'; // Dégradé vert WhatsApp
 
   // Card
   const card = document.createElement('div');
@@ -10,8 +10,8 @@ export default function createLoginPage(onLogin) {
 
   // Logo ou titre
   const logo = document.createElement('div');
-  logo.className = 'mb-6 text-4xl font-extrabold text-blue-700 tracking-tight';
-  logo.textContent = 'Bienvenu sur PencMi';
+  logo.className = 'mb-6 text-xl font-extrabold text-[#128C7E] tracking-tight'; // Vert foncé WhatsApp
+  logo.textContent = 'BIENVENU sur DIOTAYWI';
   card.appendChild(logo);
 
   // Choix Connexion / Inscription
@@ -20,12 +20,12 @@ export default function createLoginPage(onLogin) {
 
   const btnConnexion = document.createElement('button');
   btnConnexion.textContent = "Connexion";
-  btnConnexion.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
+  btnConnexion.className = 'bg-[#25D366] text-white px-6 py-2 rounded-full shadow transition hover:bg-[#128C7E] font-semibold'; // Vert principal WhatsApp
   btnGroup.appendChild(btnConnexion);
 
   const btnInscription = document.createElement('button');
   btnInscription.textContent = "Inscription";
-  btnInscription.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
+  btnInscription.className = 'bg-[#ECE5DD] text-[#128C7E] px-6 py-2 rounded-full shadow transition hover:bg-[#25D366] hover:text-white font-semibold'; // Gris clair WhatsApp
   btnGroup.appendChild(btnInscription);
 
   card.appendChild(btnGroup);
@@ -37,7 +37,7 @@ export default function createLoginPage(onLogin) {
   const phoneInputConnexion = document.createElement('input');
   phoneInputConnexion.type = 'text';
   phoneInputConnexion.placeholder = 'Numéro de téléphone';
-  phoneInputConnexion.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  phoneInputConnexion.className = 'border border-[#ECE5DD] p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] transition'; // Bordure et focus WhatsApp
   formConnexion.appendChild(phoneInputConnexion);
 
   const errorPhoneConnexion = document.createElement('div');
@@ -47,7 +47,7 @@ export default function createLoginPage(onLogin) {
   const submitConnexion = document.createElement('button');
   submitConnexion.type = 'submit';
   submitConnexion.textContent = "Se connecter";
-  submitConnexion.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 font-semibold transition';
+  submitConnexion.className = 'bg-[#25D366] text-white px-4 py-2 rounded-lg shadow hover:bg-[#128C7E] font-semibold transition'; // Vert WhatsApp
   formConnexion.appendChild(submitConnexion);
 
   // Formulaire inscription
@@ -57,7 +57,7 @@ export default function createLoginPage(onLogin) {
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.placeholder = 'Nom';
-  nameInput.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  nameInput.className = 'border border-[#ECE5DD] p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] transition'; // Bordure et focus WhatsApp
   formInscription.appendChild(nameInput);
 
   const errorName = document.createElement('div');
@@ -67,7 +67,7 @@ export default function createLoginPage(onLogin) {
   const phoneInputInscription = document.createElement('input');
   phoneInputInscription.type = 'text';
   phoneInputInscription.placeholder = 'Numéro de téléphone';
-  phoneInputInscription.className = 'border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition';
+  phoneInputInscription.className = 'border border-[#ECE5DD] p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] transition'; // Bordure et focus WhatsApp
   formInscription.appendChild(phoneInputInscription);
 
   const errorPhoneInscription = document.createElement('div');
@@ -77,7 +77,7 @@ export default function createLoginPage(onLogin) {
   const submitInscription = document.createElement('button');
   submitInscription.type = 'submit';
   submitInscription.textContent = "S'inscrire";
-  submitInscription.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 font-semibold transition';
+  submitInscription.className = 'bg-[#25D366] text-white px-4 py-2 rounded-lg shadow hover:bg-[#128C7E] font-semibold transition'; // Vert WhatsApp
   formInscription.appendChild(submitInscription);
 
   // Gestion affichage
@@ -85,19 +85,20 @@ export default function createLoginPage(onLogin) {
     e.preventDefault();
     formConnexion.classList.remove('hidden');
     formInscription.classList.add('hidden');
-    btnConnexion.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
-    btnInscription.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
+    btnConnexion.className = 'bg-[#25D366] text-white px-6 py-2 rounded-full shadow transition hover:bg-[#128C7E] font-semibold';
+    btnInscription.className = 'bg-[#ECE5DD] text-[#128C7E] px-6 py-2 rounded-full shadow transition hover:bg-[#25D366] hover:text-white font-semibold';
     // Reset errors
     errorPhoneConnexion.textContent = '';
     errorName.textContent = '';
     errorPhoneInscription.textContent = '';
   };
+  
   btnInscription.onclick = (e) => {
     e.preventDefault();
     formConnexion.classList.add('hidden');
     formInscription.classList.remove('hidden');
-    btnConnexion.className = 'bg-gray-200 text-blue-700 px-6 py-2 rounded-full shadow transition hover:bg-blue-300 font-semibold';
-    btnInscription.className = 'bg-blue-600 text-white px-6 py-2 rounded-full shadow transition hover:bg-blue-700 font-semibold';
+    btnConnexion.className = 'bg-[#ECE5DD] text-[#128C7E] px-6 py-2 rounded-full shadow transition hover:bg-[#25D366] hover:text-white font-semibold';
+    btnInscription.className = 'bg-[#25D366] text-white px-6 py-2 rounded-full shadow transition hover:bg-[#128C7E] font-semibold';
     // Reset errors
     errorPhoneConnexion.textContent = '';
     errorName.textContent = '';

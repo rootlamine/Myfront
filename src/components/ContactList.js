@@ -19,7 +19,7 @@ export default function renderContacts(
     contacts.forEach((contact) => {
       const chatItem = document.createElement("div");
       chatItem.className =
-        "flex items-center justify-between p-4 hover:bg-gray-100 border-b cursor-pointer";
+        "flex items-center justify-between p-4 hover:bg-[#ECE5DD] border-b border-[#ECE5DD] cursor-pointer transition-colors duration-200"; // Arrière-plan hover et bordure WhatsApp
 
       // Partie gauche : nom + dernier message
       const infoDiv = document.createElement("div");
@@ -27,17 +27,17 @@ export default function renderContacts(
 
       const nameSpan = document.createElement("span");
       nameSpan.textContent = contact.name;
-      nameSpan.className = "font-semibold text-base truncate";
+      nameSpan.className = "font-semibold text-base truncate text-[#34495E]"; // Texte gris foncé WhatsApp
 
       // Dernier message et heure
       const lastMsgRow = document.createElement("div");
       lastMsgRow.className = "flex items-center gap-2 mt-1 min-w-0";
 
       const lastMsgDiv = document.createElement("span");
-      lastMsgDiv.className = "text-xs text-gray-500 truncate max-w-[150px]";
+      lastMsgDiv.className = "text-xs text-[#667781] truncate max-w-[150px]"; // Gris moyen WhatsApp
 
       const lastMsgTime = document.createElement("span");
-      lastMsgTime.className = "text-xs text-gray-400 ml-2 flex-shrink-0";
+      lastMsgTime.className = "text-xs text-[#8696a0] ml-2 flex-shrink-0"; // Gris clair WhatsApp
 
       // Correction ici : on utilise contact.id et on affiche l'heure formatée
       getMessagesForContact(userId, contact.id).then((messages) => {
@@ -66,7 +66,7 @@ export default function renderContacts(
       // Bouton désarchiver
       if (contact.archived) {
         const unarchiveBtn = document.createElement("button");
-        unarchiveBtn.className = "text-yellow-400 hover:text-yellow-600";
+        unarchiveBtn.className = "text-[#8696a0] hover:text-[#25D366] transition-colors duration-200"; // Couleurs WhatsApp
         unarchiveBtn.title = "Désarchiver";
         unarchiveBtn.innerHTML = '<i class="fas fa-inbox"></i>';
         unarchiveBtn.onclick = async (e) => {
@@ -87,7 +87,7 @@ export default function renderContacts(
       // Bouton débloquer
       if (contact.blocked) {
         const unblockBtn = document.createElement("button");
-        unblockBtn.className = "text-green-400 hover:text-green-600";
+        unblockBtn.className = "text-[#8696a0] hover:text-[#25D366] transition-colors duration-200"; // Couleurs WhatsApp
         unblockBtn.title = "Débloquer";
         unblockBtn.innerHTML = '<i class="fas fa-user-check"></i>';
         unblockBtn.onclick = async (e) => {
@@ -115,9 +115,10 @@ export default function renderContacts(
       chatItem.appendChild(actions);
       conversationList.appendChild(chatItem);
     });
+    
     if (contacts.length === 0) {
       const emptyMsg = document.createElement("div");
-      emptyMsg.className = "p-4 text-gray-400 text-center";
+      emptyMsg.className = "p-4 text-[#8696a0] text-center"; // Gris clair WhatsApp
       emptyMsg.textContent = "Aucun contact pour le moment.";
       conversationList.appendChild(emptyMsg);
     }

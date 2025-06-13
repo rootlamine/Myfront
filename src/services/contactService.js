@@ -1,4 +1,5 @@
-const API_URL = "https://backend-6s9s.onrender.com/contacts"; // Change this to your actual API URL
+
+const API_URL = "https://backen-ylib.onrender.com/contacts"; // Change this to your actual API URL
 
 export async function getContacts(userId) {
   const res = await fetch(`${API_URL}?userId=${userId}&archived=false&blocked=false`);

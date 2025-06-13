@@ -15,7 +15,7 @@ export default function createMenuSidebar({
 }) {
   const menuSidebar = document.createElement("div");
   menuSidebar.className =
-    "w-16 bg-gray-900 text-white flex flex-col items-center py-4 justify-center space-y-6";
+    "w-16 bg-[#2A2F32] text-white flex flex-col items-center py-4 justify-center space-y-6"; // Gris foncé WhatsApp
 
   const menuItems = [
     { name: "Discussions", icon: "fa-comments", onClick: onDiscussions },
@@ -33,16 +33,17 @@ export default function createMenuSidebar({
   menuItems.forEach((item) => {
     const btn = document.createElement("button");
     btn.className =
-      "text-xl hover:text-blue-400 focus:outline-none flex items-center justify-center w-10 h-10";
+      "text-xl hover:text-[#25D366] focus:outline-none flex items-center justify-center w-10 h-10 transition-colors duration-200 rounded-lg hover:bg-[#3E4A4D]"; // Hover vert WhatsApp et arrière-plan subtle
     btn.title = item.name;
+    
     const icon = document.createElement("i");
     icon.className = `fas ${item.icon}`;
     btn.appendChild(icon);
-
+    
     if (item.onClick) {
       btn.addEventListener("click", item.onClick);
     }
-
+    
     menuSidebar.appendChild(btn);
   });
 
